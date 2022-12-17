@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="login-card">
+    <div class="card text-white bg-secondary">
+      <div class="card-header" *ngIf="state == 'login'"><h2>Login</h2></div>
+      <div class="card-header" *ngIf="state == 'forgot'">
+        <h2>Reset Password</h2>
+      </div>
+      <div class="card-body">
+        <div class="card-content">
+          <form [formGroup]="loginform">
+            <div class="form-group">
+              <label for="username"> Username</label>
+              <input
+                (onkeyup)="resetForm()"
+                type="text"
+                class="form-control"
+                formControlName="username"
+                name="username"
+                id="username"
+              />
+            </div>
+            <div class="form-group">
+              <label for="password"> Password</label>
+              <input
+                (onkeyup)="resetForm()"
+                type="password"
+                class="form-control"
+                formControlName="password"
+                name="password"
+                id="password"
+              />
+            </div>
+
+            <div class="form-group">
+              <button
+                (click)="formSubmit()"
+                class="btn btn-submit bg-dark text-white"
+              >
+                <span *ngIf="state == 'login'">Login</span>
+                <span *ngIf="state == 'forgot'">Reset</span>
+              </button>
+            </div>
+            <div *ngIf="state == 'login'">
+              <small
+                ><a
+                  class="custom-link"
+                  [routerLink]="['/forgot']"
+                  routerLinkActive="router-link-active"
+                  >Forgot Password?</a
+                ></small
+              >
+            </div>
+            <div *ngIf="state == 'forgot'">
+              <small
+                ><a
+                  class="custom-link"
+                  [routerLink]="['/login']"
+                  routerLinkActive="router-link-active"
+                  >Login instead?</a
+                ></small
+              >
+            </div>
+          </form>
+          <div class="alert alert-danger" *ngIf="submitted && error">
+            {{ errormsg }}
+          </div>
+          <div class="alert alert-success" *ngIf="submitted && success">
+            {{ successmsg }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

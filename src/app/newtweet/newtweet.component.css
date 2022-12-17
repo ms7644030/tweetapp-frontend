@@ -1,0 +1,42 @@
+.new-tweet-card{
+    width: 70%;
+    margin: auto;
+    height: 450px;
+}
+
+#tweetBox{
+    display: block;
+    width: 80%;
+    margin: auto;
+    font-size: medium;
+}
+
+.label{
+    width: 80%;
+    margin: 10px 0 10px 10%;
+}
+
+#tag{
+    width: 80%;
+    margin: auto;
+}
+
+.tweet-limit{
+    position: relative;
+    width: 80%;
+    margin: auto;
+    text-align-last: end;
+    color: blue;
+    top: -31px;
+    right: 12px;
+    font-size: larger;
+}
+
+.tag{
+    background-color: lightblue;
+    display: inline-block;
+    padding: 10px;
+    color: darkblue;
+    margin: 5px;
+    border-radius: 16px;
+}

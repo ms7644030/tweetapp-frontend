@@ -1,0 +1,21 @@
+.card{
+    padding: 10px 20px 10px 20px;
+}
+
+.reply{
+    width: 72%;
+    margin: auto;
+}
+.reply-btn{
+    width: 20%;
+    margin-right: 20px;
+}
+
+.space{
+    flex:1 1;
+}
+
+.reply-box{
+    flex-direction: inherit;
+    margin: 12px 0px;
+}

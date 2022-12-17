@@ -1,0 +1,55 @@
+<div class="fluid-container">
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+      <a class="navbar-brand" href="">TweetApp</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse " id="navbarSupportedContent" >
+        <ul class="navbar-nav ml-auto" *ngIf="!isUserLoggedIn; else loggedIn">
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/']"  >Home</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link"  [routerLink]="['/login']" routerLinkActive="active"  >Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"  [routerLink]="['/register']" routerLinkActive="active"  >Register</a>
+          </li>
+          
+        </ul>
+       
+        <ng-template #loggedIn>
+          <ul class="navbar-nav ml-auto" >
+            <li class="nav-item mr-3">
+             <a class="nav-link active">
+              <img src="../assets/gravatar.png" class="gravatar-small" alt="profile_pic"> 
+              Hi @{{loggedUsername}},</a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link"  [routerLink]="['/new']" routerLinkActive="active"  >New Tweet</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link"  [routerLink]="['/users/']" routerLinkActive="active"  >View Users</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link"  [routerLink]="['/tweets']" routerLinkActive="active"  >View Tweets</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)="logOut()"  [routerLink]="['']"  >Logout</a>
+            </li>
+          </ul>
+
+         
+        </ng-template>
+        
+
+      </div>
+    </nav>
+    <div class="container">
+      <router-outlet></router-outlet> 
+    </div>
+      
+</div>

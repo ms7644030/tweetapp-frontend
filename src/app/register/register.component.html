@@ -1,0 +1,159 @@
+<div class="container">
+  <div class="register-card">
+    <div class="card text-white bg-secondary">
+      <div class="card-header"><h2>Register</h2></div>
+      <div class="card-body">
+        <div class="card-content">
+          <form [formGroup]="registerForm">
+            <div class="form-group">
+              <label for="loginId"> Username</label>
+              <input
+                (keyup)="resetMessage()"
+                [ngClass]="{ 'danger-box': submitted && f.loginId.errors }"
+                type="text"
+                class="form-control"
+                formControlName="loginId"
+                name="username"
+                id="username"
+              />
+              <div *ngIf="submitted && f.loginId.errors" class="danger">
+                <small *ngIf="f.loginId.errors.required"
+                  >User name is required</small
+                >
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password"> Password</label>
+              <input
+                [ngClass]="{ 'danger-box': submitted && f.password.errors }"
+                type="password"
+                class="form-control"
+                formControlName="password"
+                name="password"
+                id="password"
+              />
+              <div *ngIf="submitted && f.password.errors" class="danger">
+                <small *ngIf="f.password.errors.required"
+                  >Password is required</small
+                >
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword"> Confirm Password</label>
+              <input
+                [ngClass]="{
+                  'danger-box':
+                    submitted && (f.confirmPassword.errors || e?.notSame)
+                }"
+                type="password"
+                class="form-control"
+                formControlName="confirmPassword"
+                name="confirmPassword"
+                id="confirmPassword"
+              />
+              <div
+                *ngIf="submitted && (f.confirmPassword.errors || e?.notSame)"
+                class="danger"
+              >
+                <small *ngIf="f.confirmPassword.errors?.required"
+                  >Confirm Password is required</small
+                >
+                <small *ngIf="e?.notSame"
+                  >Confirm Password does not match</small
+                >
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="firstName"> First Name</label>
+              <input
+                [ngClass]="{ 'danger-box': submitted && f.firstName.errors }"
+                type="firstName"
+                class="form-control"
+                formControlName="firstName"
+                name="firstName"
+                id="firstName"
+              />
+              <div *ngIf="submitted && f.firstName.errors" class="danger">
+                <small *ngIf="f.firstName.errors.required"
+                  >First Name is required</small
+                >
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="lastName"> Last Name</label>
+              <input
+                [ngClass]="{ 'danger-box': submitted && f.lastName.errors }"
+                type="text"
+                class="form-control"
+                formControlName="lastName"
+                name="lastName"
+                id="lastName"
+              />
+              <div *ngIf="submitted && f.lastName.errors" class="danger">
+                <small *ngIf="f.lastName.errors.required"
+                  >Last Name is required</small
+                >
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="emailId"> Email Id</label>
+              <input
+                [ngClass]="{ 'danger-box': submitted && f.emailId.errors }"
+                type="email"
+                class="form-control"
+                formControlName="emailId"
+                name="email"
+                id="email"
+              />
+              <div *ngIf="submitted && f.emailId.errors" class="danger">
+                <small *ngIf="f.emailId.errors.required"
+                  >Email is required</small
+                >
+                <small *ngIf="f.emailId.errors.emailId"
+                  >Not a valid email format</small
+                >
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="contactNo"> Contact Number</label>
+              <input
+                [ngClass]="{
+                  'danger-box': submitted && f.contactNo.errors
+                }"
+                type="number"
+                class="form-control"
+                formControlName="contactNo"
+                name="contactNumber"
+                id="contactNumber"
+              />
+              <div *ngIf="submitted && f.contactNo.errors" class="danger">
+                <small *ngIf="f.contactNo.errors.required"
+                  >Contact Number is required</small
+                >
+              </div>
+            </div>
+            <div class="form-group">
+              <button
+                [ngClass]="{ disabled: !f.loginId.errors }"
+                (click)="formSubmit(registerForm)"
+                class="btn btn-submit bg-dark text-white"
+              >
+                Register
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="alert alert-danger" *ngIf="userExists">
+          Username already exists!! Please change username.
+        </div>
+        <div class="alert alert-success" *ngIf="success">
+          User successfully created!
+        </div>
+        <div class="alert alert-warning" *ngIf="error">
+          Error connecting to Server! Please try later.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

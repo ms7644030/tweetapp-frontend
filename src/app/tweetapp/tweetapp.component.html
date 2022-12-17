@@ -1,0 +1,30 @@
+<div class="card m-3 bg-secondary text-white" *ngIf="tweet!=null">
+    <div class="card-hearder  ">
+        <h5>Tweet : {{tweet.tweetMessage}}</h5>
+       
+    </div>
+    <div class="card-body">
+        <h6>User :  @{{tweet.userId}}</h6>
+        <h6>Likes : {{tweet.likeCounter}}</h6>
+        <h6>Tags : <small class="alert-warning m-2 p-2" *ngFor="let tag of tweet.tags">#{{tag}}</small></h6>
+        <h6>TimeStamp : {{tweet.timeStamp}}</h6>
+        <div class="d-flex">
+            <button class="btn btn-dark" (click)="likeTweet(true)" *ngIf="!tweet.userIdLiked.includes(currentUser)">Like</button>
+            <button class="btn btn-dark" (click)="likeTweet(false)" *ngIf="tweet.userIdLiked.includes(currentUser)">Dislike</button>
+            <div class="space"></div>
+            <button class="btn btn-dark ml-1 mr-1"  (click)="editTweet()" *ngIf="tweet.userId == currentUser">Edit Tweet</button>
+            <button class="btn btn-dark ml-1 mr-1"  (click)="deleteTweet()" *ngIf="tweet.userId == currentUser">Delete Tweet</button>
+        </div>
+        
+
+        <div class="card d-flex text-dark reply-box" *ngFor="let reply of tweet.replies">
+            <h6>@{{reply.userId}}</h6>  <h6 class="ml-5">{{reply.comment}}</h6> <div class="space"></div>
+            <h6>{{reply.timeStamp}}</h6>
+        </div>
+    </div>
+    <div class="d-flex">
+        <textarea class="reply" #comment [(ngModel)]="currentComment" name="comment" id="comment" cols="30" rows="2" maxlength="144"></textarea>
+        <button class="btn btn-light reply-btn" (click)="replyToTweet(comment.value)">Reply</button>
+    </div>
+    
+</div>

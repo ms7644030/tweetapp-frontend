@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="content-card "> 
+        <app-tweetapp *ngIf="tweetSelected" [selectedTweet]="tweet" (delTweet)="deleteTweet($event)"></app-tweetapp>
+        <div class="card" *ngFor="let tweet of tweetsList; let i=index">
+            <div class="card-content d-flex">
+                <div class="gravatar pt-2">
+                    <img src="../assets/gravatar.png" class="gravatar-big" alt="profile_pic"> 
+                </div>
+                <div class="content ml-5">
+                    <h2>@{{tweet.userId}}</h2>
+                    <h5>{{tweet.tweetMessage}}</h5>
+                    <span>{{tweet.likeCounter}} Likes  </span> 
+                    <span> {{tweet.replies.length}} Replies</span>
+                </div>
+                <div class="space"></div>
+                <div class="content-end pr-3">
+                    <h5>{{tweet.timeStamp}}</h5>
+                    <button class="btn btn-dark mt-3" (click)="viewTweet(i)">View Tweet</button>
+                </div>
+            </div>
+            
+        </div>
+        
+        
+    </div>
+</div>
