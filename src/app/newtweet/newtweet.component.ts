@@ -52,7 +52,7 @@ export class NewtweetComponent implements OnInit {
 
   updateTweet(message: string) {
     let myTweet = new TweetForm();
-    myTweet.userId = localStorage.getItem('tweetapp-loggeduser');
+    myTweet.loginId = localStorage.getItem('tweetapp-loggeduser');
     myTweet.likeCounter = this.currentTweet.likeCounter;
     myTweet.timeStamp = this.currentTweet.timeStamp;
     myTweet.tweetText = message;
@@ -77,7 +77,7 @@ export class NewtweetComponent implements OnInit {
 
   tweet(message: string) {
     let myTweet = new TweetForm();
-    myTweet.userId = localStorage.getItem('tweetapp-loggeduser');
+    myTweet.loginId = localStorage.getItem('tweetapp-loggeduser');
     myTweet.timeStamp = new Date().toDateString();
     myTweet.likeCounter = 0;
     myTweet.tweetText = message;

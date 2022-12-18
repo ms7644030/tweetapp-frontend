@@ -63,7 +63,7 @@ export class MainService {
       }),
     };
     return this.http.post(
-      this.PREFIX_PATH + data.userId + '/add',
+      this.PREFIX_PATH + data.loginId + '/add',
       data.tweetText,
       httpOptions
     );
@@ -81,7 +81,7 @@ export class MainService {
 
   replyTweet(data: Reply, id: number) {
     return this.http.put(
-      this.PREFIX_PATH + data.userId + '/reply/' + id,
+      this.PREFIX_PATH + data.loginId + '/reply/' + id,
       data,
       {
         observe: 'response',
@@ -91,7 +91,7 @@ export class MainService {
 
   updateTweet(data: TweetForm, id: number) {
     return this.http.put(
-      this.PREFIX_PATH + data.userId + '/update/' + id,
+      this.PREFIX_PATH + data.loginId + '/update/' + id,
       data,
       {
         observe: 'response',

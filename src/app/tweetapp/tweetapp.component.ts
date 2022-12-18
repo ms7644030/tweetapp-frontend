@@ -27,7 +27,7 @@ export class TweetappComponent implements OnInit {
 
   replyToTweet(reply) {
     let currentReply = new Reply();
-    currentReply.userId = this.currentUser;
+    currentReply.loginId = this.currentUser;
     currentReply.timeStamp = new Date().toDateString();
     currentReply.comment = reply;
     this.tweet.replies.push(currentReply);

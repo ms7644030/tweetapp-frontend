@@ -14,7 +14,7 @@ export class LoginForm {
 }
 
 export class TweetForm {
-  userId: string;
+  loginId: string;
   tweetText: string;
   timeStamp: string;
   likeCounter: number;
@@ -22,7 +22,7 @@ export class TweetForm {
 }
 
 export class Reply {
-  userId: string;
+  loginId: string;
   timeStamp: string;
   comment: string;
 }
