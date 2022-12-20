@@ -20,17 +20,7 @@
           ></textarea>
           <div class="tweet-limit">{{ 150 - message.value.length }}</div>
         </div>
-        <div class="form-group">
-          <label class="label" for="tags">Tags</label>
-          <input
-            (keyup.enter)="addToList(currentTag.value); currentTag.value = ''"
-            #currentTag
-            class="form-control"
-            type="text"
-            name="tags"
-            id="tag"
-          />
-        </div>
+        
         <div class="form-group label mb-2">
           <button
             action="none"

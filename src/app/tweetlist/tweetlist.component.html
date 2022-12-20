@@ -15,18 +15,19 @@
           />
         </div>
         <div class="content ml-5">
-          <h2>@{{ tweet.loginId }}</h2>
+          <h2>@{{ tweet.username}}</h2>
           <h5>{{ tweet.tweetText }}</h5>
-          <span>{{ tweet.likeCounter }} Likes </span>
+          <span>{{ tweet.likes.length }} Likes </span>
           <span> {{ tweet.replies.length }} Replies</span>
         </div>
         <div class="space"></div>
         <div class="content-end pr-3">
-          <h5>{{ tweet.timeStamp }}</h5>
+          <h5>{{ tweet.tweetDate }}</h5>
           <button class="btn btn-dark mt-3" (click)="viewTweet(i)">
             View Tweet
           </button>
         </div>
+        
       </div>
     </div>
   </div>

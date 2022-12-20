@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MainService } from '../main.service';
 import { IncomingResponse, TweetEntity } from '../models/incomingdata.model';
+import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-tweetlist',
@@ -13,10 +14,12 @@ export class TweetlistComponent implements OnInit {
   tweetSelected = false;
   tweet: TweetEntity;
   userNameTweets: string;
-  constructor(private service: MainService, private route: ActivatedRoute) {}
+  clicked: boolean = false;
+  constructor(private service: MainService, private route: ActivatedRoute,private shared : SharedService) {}
 
   ngOnInit(): void {
-    this.service.getAllTweets().subscribe((response) => {
+    if(this.shared.getSelected())
+    { this.service.userTweets(this.shared.getUsername()).subscribe((response) => {
       if (response.status == 200) {
         this.tweetsList = response.body as TweetEntity[];
         let userName =
@@ -25,11 +28,28 @@ export class TweetlistComponent implements OnInit {
             : '';
         if (userName != '') {
           this.tweetsList = this.tweetsList.filter(
-            (tweet) => tweet.userId == userName
+            (tweet) => tweet.username == userName
           );
         }
       }
     });
+    this.shared.setSelected(false);  
+  }
+    else{ this.service.getAllTweets().subscribe((response) => {
+      if (response.status == 200) {
+        this.tweetsList = response.body as TweetEntity[];
+        let userName =
+          this.route.snapshot.firstChild?.params?.id != null
+            ? this.route.snapshot.firstChild.params.id
+            : '';
+        if (userName != '') {
+          this.tweetsList = this.tweetsList.filter(
+            (tweet) => tweet.username == userName
+          );
+        }
+      }
+    });}
+    
   }
 
   viewTweet(idx) {

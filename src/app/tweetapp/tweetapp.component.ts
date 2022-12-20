@@ -2,7 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { MainService } from '../main.service';
 import { IncomingResponse, TweetEntity } from '../models/incomingdata.model';
-import { Reply } from '../models/userInputForm';
+import { Comments } from '../models/userInputForm';
+import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-tweetapp',
@@ -14,64 +15,91 @@ export class TweetappComponent implements OnInit {
   tweet: TweetEntity;
 
   @Output('delTweet')
-  deleteCurrentTweet: EventEmitter<number> = new EventEmitter();
+  deleteCurrentTweet: EventEmitter<String> = new EventEmitter();
 
   currentComment = '';
   currentUser: string;
+  liked: boolean = false;
 
-  constructor(private service: MainService, private route: Router) {
+  toggle : boolean = true;
+  status : string = 'Like'; 
+
+  constructor(private service: MainService, private route: Router, private shared : SharedService) {
     this.currentUser = localStorage.getItem('tweetapp-loggeduser');
+    
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    //  if(this.tweet.likes.includes(this.currentUser)){
+    //   //  this.toggle = false;
+    //    this.status = 'Liked';
+    //  }
+
+
+  }
 
   replyToTweet(reply) {
-    let currentReply = new Reply();
-    currentReply.loginId = this.currentUser;
-    currentReply.timeStamp = new Date().toDateString();
+    let currentReply = new Comments();
+    currentReply.username = this.currentUser;
+    currentReply.timestamp = new Date().toDateString();
     currentReply.comment = reply;
     this.tweet.replies.push(currentReply);
     this.service
-      .replyTweet(currentReply, this.tweet.tweetId)
-      .subscribe((response) => {
-        if (response.status == 200) {
+      .replyTweet(this.currentUser, this.tweet.tweetId,currentReply,this.shared.getJwtToken())
+      .subscribe((data) => {
+        if (data == "Replied") {
           this.currentComment = '';
         }
       });
   }
 
   likeTweet(like: boolean) {
+    
     this.service
-      .likeTweet(this.currentUser, this.tweet.tweetId)
-      .subscribe((response) => {
-        if (response.status == 200) {
+      .likeTweet(this.currentUser, this.tweet.tweetId,this.shared.getJwtToken())
+      .subscribe((data) => {
+        if (data == "liked tweet") {
           if (like) {
-            this.tweet.userIdLiked.push(this.currentUser);
-            this.tweet.likeCounter += 1;
+            this.tweet.likes.push(this.currentUser);
+            
+          //  this.toggle = !this.toggle;
+          //  this.status = this.toggle ? 'Like' : 'Liked';
+            
           } else {
-            this.tweet.userIdLiked.splice(
-              this.tweet.userIdLiked.indexOf(this.currentUser),
-              1
+            this.tweet.likes.splice(
+              this.tweet.likes.indexOf(this.currentUser),
+             
             );
-            this.tweet.likeCounter -= 1;
+            
+            //*ngIf="!tweet.likes.includes(currentUser)"
+            //this.tweet.likeCounter -= 1;
+            
           }
+          
         }
       });
   }
 
   deleteTweet() {
     this.service
-      .deleteTweet(this.currentUser, this.tweet.tweetId)
-      .subscribe((response) => {
-        if (response.status == 200) {
+      .deleteTweet(this.currentUser, this.tweet.tweetId,this.shared.getJwtToken())
+      .subscribe((data) => {
+        if (data == "Tweet deleted successfully") {
           this.deleteCurrentTweet.emit(this.tweet.tweetId);
           this.tweet = null;
+          this.route.navigate(['/tweets/']);
         }
       });
+    
   }
 
   editTweet() {
     this.service.selectedTweet = this.tweet;
     this.route.navigate(['/edit/' + this.tweet.tweetId]);
   }
+
+  enableDisableRule(job) {
+    this.toggle = !this.toggle;
+    this.status = this.toggle ? 'Like' : 'Liked';
+}
 }

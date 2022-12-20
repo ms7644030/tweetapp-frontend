@@ -45,16 +45,15 @@ export class NewtweetComponent implements OnInit {
     ) {
       this.currentTweet = this.service.selectedTweet;
       this.editTweet = true;
-      this.messageContent = this.currentTweet.tweetMessage;
-      this.tags = this.currentTweet.tags;
+      this.messageContent = this.currentTweet.tweetText;
     }
   }
 
   updateTweet(message: string) {
     let myTweet = new TweetForm();
     myTweet.loginId = localStorage.getItem('tweetapp-loggeduser');
-    myTweet.likeCounter = this.currentTweet.likeCounter;
-    myTweet.timeStamp = this.currentTweet.timeStamp;
+    myTweet.likeCounter = this.currentTweet.likes.length;
+    myTweet.timeStamp = this.currentTweet.tweetDate;
     myTweet.tweetText = message;
     myTweet.tags = this.tags;
 

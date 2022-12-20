@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
 
     if (this.state == 'login') {
       this.service.loginUser(formData).subscribe((response) => {
-        console.log(response);
+       // console.log(response);
         this.jwtModal = <JwtToken>response.body;
         if (response.status == 200) {
           this.jwtToken.setJwtToken(this.jwtModal.jwttoken);
@@ -59,23 +59,45 @@ export class LoginComponent implements OnInit {
             this.service.isUserLoggedIn.next(true);
             this.currentRoute.navigate(['/tweets']);
           }, 1000);
-        } else {
-          this.error = true;
-          this.errormsg = 'Failed to Login! Invalid credentials';
-        }
-      });
+        } 
+        // else if(response.status == 400){
+        //   this.error = true;
+        //   this.errormsg = 'Failed to Login! Invalid credentials';
+        // }
+      },(err) => {
+        if(err.status == 400){
+            this.error = true;
+            this.errormsg = 'Failed to Login! Invalid credentials';
+            setTimeout(() => {
+              this.resetForm();
+              this.loginform.reset();
+            }, 2000);
+      }
+      }
+      );
     } else {
       this.service.resetUserPassword(formData).subscribe((response) => {
         if (response.status == 200) {
           this.success = true;
           this.successmsg = 'Reset Password Complete!';
-        } else if (response.status == 400) {
-          this.error = true;
-          this.errormsg = 'Invalid User!';
-        } else {
-          this.error = true;
-          this.errormsg = 'Invalid Credentials!';
         }
+        // } else if (response.status == 400) {
+        //   this.error = true;
+        //   this.errormsg = 'Invalid User!';
+        // } else {
+        //   this.error = true;
+        //   this.errormsg = 'Invalid Credentials!';
+        // }
+      },(err) => {
+        if(err.status == 400){
+            this.error = true;
+             this.errormsg = 'Invalid User!';
+            setTimeout(() => {
+             // this.errormsg = 'Invalid User!';
+              this.resetForm();
+              this.loginform.reset();
+            }, 2000);
+      }
       });
     }
   }

@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MainService } from '../main.service';
 import { RegisterForm } from '../models/userInputForm';
 import { IncomingResponse } from '../models/incomingdata.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -45,7 +46,7 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.errors;
   }
 
-  constructor(private service: MainService) {
+  constructor(private service: MainService,private currentRoute: Router) {
     this.registerFormData = new RegisterForm();
   }
 
@@ -71,6 +72,9 @@ export class RegisterComponent implements OnInit {
             this.submitted = false;
             this.userExists = false;
             this.success = true;
+            setTimeout(() => {
+              this.currentRoute.navigate(['login']);
+            }, 1000);
           } else if (response.status == 409) {
             this.userExists = true;
           } else {

@@ -21,8 +21,8 @@ export class TweetForm {
   tags: string[];
 }
 
-export class Reply {
-  loginId: string;
-  timeStamp: string;
+export class Comments {
+  username: string;
+  timestamp: string;
   comment: string;
 }

@@ -1,14 +1,26 @@
-import { Reply } from "./userInputForm";
-export class TweetEntity {
-    tweetId: number;
-    userId: string;
-    tweetMessage: string;
-    timeStamp: string;
-    likeCounter: number;
+import { Comments } from "./userInputForm";
 
-    replies: Reply[];
-    userIdLiked: string[];
-    tags: [];
+export class TweetEntity {
+    // tweetId: number;
+    // userId: string;
+    // tweetMessage: string;
+    // timeStamp: string;
+    // likeCounter: number;
+
+    // replies: Reply[];
+    // userIdLiked: string[];
+    // tags: [];
+     tweetId: string;
+     username: string;
+      tweetText: string;
+     firstName: string;
+    lastName: string;
+     tweetDate: string;
+//    @Embedded
+//    private ProfileImage profileImage;
+     imageurl:  string;
+     likes :string[];
+     replies:Comments[];
 }
 
 export class UserEntity {

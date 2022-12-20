@@ -6,47 +6,47 @@
         class="gravatar-small"
         alt="profile_pic"
       />
-      @{{ tweet.loginId }}
+      @{{ tweet.username }}
     </h5>
   </div>
   <div class="card-body">
     <h6>{{ tweet.tweetText }}</h6>
-
-    <h6>Likes : {{ tweet.likeCounter }}</h6>
+    <!-- <h6>Likes : {{likeCount}}</h6> -->
     <h6>
       Tags :
       <small class="alert-warning m-2 p-2" *ngFor="let tag of tweet.tags"
         >#{{ tag }}</small
       >
     </h6>
-    <h6>TimeStamp : {{ tweet.timeStamp }}</h6>
+    <h6>TimeStamp : {{ tweet.tweetDate }}</h6>
     <div class="d-flex">
       <button
-        class="btn btn-dark"
-        (click)="likeTweet(true)"
-        *ngIf="!tweet.userIdLiked.includes(currentUser)"
-      >
-        Like
+       
+        (click)="likeTweet(true);enableDisableRule()"
+       
+        [ngClass]="{'blue' : toggle, 'red': !toggle}" disabled="tweet.likes.includes(currentUser)"
+        >
+      {{status}}
       </button>
-      <button
+      <!-- <button
         class="btn btn-dark"
         (click)="likeTweet(false)"
-        *ngIf="tweet.userIdLiked.includes(currentUser)"
+        *ngIf="tweet.likes.includes(currentUser)"
       >
         Dislike
-      </button>
+      </button> -->
       <div class="space"></div>
       <button
         class="btn btn-dark ml-1 mr-1"
         (click)="editTweet()"
-        *ngIf="tweet.loginId == currentUser"
+        *ngIf="tweet.username == currentUser"
       >
         Edit Tweet
       </button>
       <button
         class="btn btn-dark ml-1 mr-1"
         (click)="deleteTweet()"
-        *ngIf="tweet.loginId == currentUser"
+        *ngIf="tweet.username == currentUser"
       >
         Delete Tweet
       </button>
@@ -56,10 +56,10 @@
       class="card d-flex text-dark reply-box"
       *ngFor="let reply of tweet.replies"
     >
-      <h6>@{{ reply.loginId }}</h6>
+      <h6>@{{ reply.username }}</h6>
       <h6 class="ml-5">{{ reply.comment }}</h6>
       <div class="space"></div>
-      <h6>{{ reply.timeStamp }}</h6>
+      <h6>{{ reply.timestamp }}</h6>
     </div>
   </div>
   <div class="d-flex">

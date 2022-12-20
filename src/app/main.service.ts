@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {
   LoginForm,
   RegisterForm,
-  Reply,
+  Comments,
   TweetForm,
 } from './models/userInputForm';
 import { BehaviorSubject, observable, Observable } from 'rxjs';
@@ -17,6 +17,8 @@ export class MainService {
   public selectedTweet: TweetEntity;
 
   constructor(private http: HttpClient) {}
+  
+   
 
   registerNewUser(data: RegisterForm) {
     return this.http.post(this.PREFIX_PATH + 'register', data, {
@@ -69,27 +71,47 @@ export class MainService {
     );
   }
 
-  likeTweet(userId: string, id: number) {
+  // likeTweet(username: string, tweetId: string) {
+  //   return this.http.put(
+  //     this.PREFIX_PATH + username + '/like/' + tweetId,
+  //     {},
+  //     {
+  //       observe: 'response',
+  //     }
+  //   );
+  // }
+
+  likeTweet(username: string, tweetId: string, jwt: string) {
+    let jwttoken = jwt;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: jwttoken,
+      }),
+    };
     return this.http.put(
-      this.PREFIX_PATH + userId + '/like/' + id,
+      this.PREFIX_PATH +username  + '/like/' + tweetId,
       {},
-      {
-        observe: 'response',
-      }
+       httpOptions
     );
   }
 
-  replyTweet(data: Reply, id: number) {
-    return this.http.put(
-      this.PREFIX_PATH + data.loginId + '/reply/' + id,
+  replyTweet(username:string, tweetId: string,data: Comments,jwt :string) {
+    let jwttoken = jwt;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: jwttoken,
+      }),
+    };
+    return this.http.post(
+      this.PREFIX_PATH + username + '/reply/' + tweetId,
       data,
-      {
-        observe: 'response',
-      }
+      httpOptions
     );
   }
 
-  updateTweet(data: TweetForm, id: number) {
+  updateTweet(data: TweetForm, id: string) {
     return this.http.put(
       this.PREFIX_PATH + data.loginId + '/update/' + id,
       data,
@@ -99,8 +121,21 @@ export class MainService {
     );
   }
 
-  deleteTweet(userId: string, id: number) {
-    return this.http.delete(this.PREFIX_PATH + userId + '/delete/' + id, {
+  deleteTweet(username: string, tweetId: string, jwt :string) {
+    let jwttoken = jwt;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: jwttoken,
+      }),
+    };
+    return this.http.delete(this.PREFIX_PATH + username + '/delete/' + tweetId, 
+    httpOptions,
+   );
+  }
+
+  userTweets(username: string) {
+    return this.http.get(this.PREFIX_PATH + username, {
       observe: 'response',
     });
   }

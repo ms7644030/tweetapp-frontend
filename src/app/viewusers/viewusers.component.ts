@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from '../main.service';
 import { IncomingResponse } from '../models/incomingdata.model';
+import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-viewusers',
@@ -11,7 +12,7 @@ export class ViewusersComponent implements OnInit {
   userNameList: string[];
   userSelected: boolean = false;
   selectedUser: string;
-  constructor(private service: MainService) {
+  constructor(private service: MainService, private shared : SharedService) {
     this.userNameList = [];
   }
 
@@ -24,6 +25,8 @@ export class ViewusersComponent implements OnInit {
   }
 
   selectUser(user: string) {
+    this.shared.setUsername(user);
+    this.shared.setSelected(this.userSelected);
     if (
       user != null &&
       user == this.selectedUser &&
@@ -33,6 +36,11 @@ export class ViewusersComponent implements OnInit {
     } else {
       this.userSelected = !this.userSelected;
       this.selectedUser = user;
+      //this.userSelected = true;
+      
+
+      
+
     }
   }
 }
