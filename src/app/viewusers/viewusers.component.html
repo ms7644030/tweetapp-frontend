@@ -8,7 +8,7 @@
                 <div class="left">
                     <button class="btn btn-dark mr-3" [routerLink]="['/tweets/'+user]" (click)="selectUser(user)">View Tweets</button>
 
-                    <button class="btn btn-dark" (click)="selectUser(user)">View User</button>
+                    <button class="btn btn-dark" (click)="selectUser(user);scrollTop()">View User</button>
                 </div>
             </div>
         </div>

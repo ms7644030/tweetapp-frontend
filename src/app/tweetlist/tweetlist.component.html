@@ -1,5 +1,6 @@
 <div class="container">
-  <div class="content-card">
+  <div class="content-card" >
+    <!--scroll-ele" #scroll-->
     <app-tweetapp
       *ngIf="tweetSelected"
       [selectedTweet]="tweet"
@@ -23,7 +24,7 @@
         <div class="space"></div>
         <div class="content-end pr-3">
           <h5>{{ tweet.tweetDate }}</h5>
-          <button class="btn btn-dark mt-3" (click)="viewTweet(i)">
+          <button class="btn btn-dark mt-3" (click)="viewTweet(i);scrollTop()">
             View Tweet
           </button>
         </div>

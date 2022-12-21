@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MainService } from '../main.service';
 import { IncomingResponse, TweetEntity } from '../models/incomingdata.model';
-import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-tweetlist',
@@ -10,16 +9,15 @@ import { SharedService } from '../shared.service';
   styleUrls: ['./tweetlist.component.css'],
 })
 export class TweetlistComponent implements OnInit {
+ // @ViewChild('scroll') scroll: ElementRef;
   tweetsList: TweetEntity[];
   tweetSelected = false;
   tweet: TweetEntity;
   userNameTweets: string;
-  clicked: boolean = false;
-  constructor(private service: MainService, private route: ActivatedRoute,private shared : SharedService) {}
+  constructor(private service: MainService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    if(this.shared.getSelected())
-    { this.service.userTweets(this.shared.getUsername()).subscribe((response) => {
+    this.service.getAllTweets().subscribe((response) => {
       if (response.status == 200) {
         this.tweetsList = response.body as TweetEntity[];
         let userName =
@@ -33,23 +31,6 @@ export class TweetlistComponent implements OnInit {
         }
       }
     });
-    this.shared.setSelected(false);  
-  }
-    else{ this.service.getAllTweets().subscribe((response) => {
-      if (response.status == 200) {
-        this.tweetsList = response.body as TweetEntity[];
-        let userName =
-          this.route.snapshot.firstChild?.params?.id != null
-            ? this.route.snapshot.firstChild.params.id
-            : '';
-        if (userName != '') {
-          this.tweetsList = this.tweetsList.filter(
-            (tweet) => tweet.username == userName
-          );
-        }
-      }
-    });}
-    
   }
 
   viewTweet(idx) {
@@ -63,5 +44,11 @@ export class TweetlistComponent implements OnInit {
     this.tweetsList.splice(currentIdx, 1);
     this.tweetSelected = false;
     this.tweet = null;
+  }
+
+  scrollTop() {
+    window.scrollTo(0, 0);
+
+    //this.scroll.nativeElement.scrollTop = 0;
   }
 }

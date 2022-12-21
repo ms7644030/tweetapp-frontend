@@ -21,21 +21,22 @@ export class TweetappComponent implements OnInit {
   currentUser: string;
   liked: boolean = false;
 
-  toggle : boolean = true;
-  status : string = 'Like'; 
+  toggle: boolean = true;
+  status: string = 'Like';
 
-  constructor(private service: MainService, private route: Router, private shared : SharedService) {
+  constructor(
+    private service: MainService,
+    private route: Router,
+    private shared: SharedService
+  ) {
     this.currentUser = localStorage.getItem('tweetapp-loggeduser');
-    
   }
 
   ngOnInit(): void {
-    //  if(this.tweet.likes.includes(this.currentUser)){
-    //   //  this.toggle = false;
-    //    this.status = 'Liked';
-    //  }
-
-
+     if(this.tweet.likes.includes(this.currentUser)){
+      this.toggle = false;
+      this.status = 'Liked';
+     }
   }
 
   replyToTweet(reply) {
@@ -45,52 +46,57 @@ export class TweetappComponent implements OnInit {
     currentReply.comment = reply;
     this.tweet.replies.push(currentReply);
     this.service
-      .replyTweet(this.currentUser, this.tweet.tweetId,currentReply,this.shared.getJwtToken())
+      .replyTweet(
+        this.currentUser,
+        this.tweet.tweetId,
+        currentReply,
+        this.shared.getJwtToken()
+      )
       .subscribe((data) => {
-        if (data == "Replied") {
+        if (data == 'Replied') {
           this.currentComment = '';
         }
       });
   }
 
   likeTweet(like: boolean) {
-    
     this.service
-      .likeTweet(this.currentUser, this.tweet.tweetId,this.shared.getJwtToken())
+      .likeTweet(
+        this.currentUser,
+        this.tweet.tweetId,
+        this.shared.getJwtToken()
+      )
       .subscribe((data) => {
-        if (data == "liked tweet") {
+        if (data == 'liked tweet') {
           if (like) {
             this.tweet.likes.push(this.currentUser);
-            
-          //  this.toggle = !this.toggle;
-          //  this.status = this.toggle ? 'Like' : 'Liked';
-            
+
+            //  this.toggle = !this.toggle;
+            this.status = this.toggle ? 'Like' : 'Liked';
           } else {
-            this.tweet.likes.splice(
-              this.tweet.likes.indexOf(this.currentUser),
-             
-            );
-            
+            this.tweet.likes.splice(this.tweet.likes.indexOf(this.currentUser));
+
             //*ngIf="!tweet.likes.includes(currentUser)"
             //this.tweet.likeCounter -= 1;
-            
           }
-          
         }
       });
   }
 
   deleteTweet() {
     this.service
-      .deleteTweet(this.currentUser, this.tweet.tweetId,this.shared.getJwtToken())
+      .deleteTweet(
+        this.currentUser,
+        this.tweet.tweetId,
+        this.shared.getJwtToken()
+      )
       .subscribe((data) => {
-        if (data == "Tweet deleted successfully") {
+        if (data == 'Tweet deleted successfully') {
           this.deleteCurrentTweet.emit(this.tweet.tweetId);
           this.tweet = null;
           this.route.navigate(['/tweets/']);
         }
       });
-    
   }
 
   editTweet() {
@@ -98,8 +104,8 @@ export class TweetappComponent implements OnInit {
     this.route.navigate(['/edit/' + this.tweet.tweetId]);
   }
 
-  enableDisableRule(job) {
+  enableDisableRule() {
     this.toggle = !this.toggle;
     this.status = this.toggle ? 'Like' : 'Liked';
-}
+  }
 }

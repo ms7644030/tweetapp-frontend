@@ -12,26 +12,21 @@
   <div class="card-body">
     <h6>{{ tweet.tweetText }}</h6>
     <!-- <h6>Likes : {{likeCount}}</h6> -->
-    <h6>
-      Tags :
-      <small class="alert-warning m-2 p-2" *ngFor="let tag of tweet.tags"
-        >#{{ tag }}</small
-      >
-    </h6>
+
     <h6>TimeStamp : {{ tweet.tweetDate }}</h6>
     <div class="d-flex">
       <button
+        (click)="likeTweet(true); enableDisableRule()"
+        [ngClass]="{ blue: toggle, red: !toggle }"
        
-        (click)="likeTweet(true);enableDisableRule()"
-       
-        [ngClass]="{'blue' : toggle, 'red': !toggle}" disabled="tweet.likes.includes(currentUser)"
-        >
-      {{status}}
+      >
+        {{ status }}
       </button>
       <!-- <button
         class="btn btn-dark"
         (click)="likeTweet(false)"
         *ngIf="tweet.likes.includes(currentUser)"
+         disabled="tweet.likes.includes(currentUser)"
       >
         Dislike
       </button> -->

@@ -43,4 +43,10 @@ export class ViewusersComponent implements OnInit {
 
     }
   }
+
+  scrollTop() {
+    window.scrollTo(0, 0);
+
+    //this.scroll.nativeElement.scrollTop = 0;
+  }
 }
