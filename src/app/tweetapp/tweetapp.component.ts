@@ -42,7 +42,13 @@ export class TweetappComponent implements OnInit {
   replyToTweet(reply) {
     let currentReply = new Comments();
     currentReply.username = this.currentUser;
-    currentReply.timestamp = new Date().toDateString();
+    let d = new Date();
+    let dformat = [d.getMonth()+1,
+      d.getDate(),
+      d.getFullYear()].join('-')+' '+
+     [d.getHours(),
+      d.getMinutes()].join(':');
+    currentReply.timestamp = dformat;
     currentReply.comment = reply;
     this.tweet.replies.push(currentReply);
     this.service

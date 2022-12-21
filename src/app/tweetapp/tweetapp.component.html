@@ -1,4 +1,4 @@
-<div class="card m-3 bg-secondary text-white" *ngIf="tweet != null">
+<div class="card m-3  text-white" style="background-color: #23A3BF;" *ngIf="tweet != null">
   <div class="card-hearder">
     <h5>
       <img
@@ -69,7 +69,7 @@
       maxlength="144"
     ></textarea>
     <button
-      class="btn btn-light reply-btn"
+      class="btn btn-dark reply-btn"
       (click)="replyToTweet(comment.value)"
     >
       Reply

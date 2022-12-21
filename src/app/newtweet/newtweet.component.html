@@ -1,14 +1,14 @@
 <div class="container">
   <div class="content-card">
     <div class="new-tweet-card pt-5">
-      <div class="card text-white bg-secondary">
+      <div class="card text-white"style="background-color:#DCE5E9">
         <div class="card-header">
           <h3 *ngIf="!editTweet">New Tweet</h3>
           <h3 *ngIf="editTweet">Edit Tweet</h3>
         </div>
-
-        <div class="form-group">
-          <label class="label" for="tweet">Message</label>
+        
+        <div class="form-group" style="background-color:#DCE5E9 ">
+          <label class="label" for="tweet" style="color: black;">Message</label>
           <textarea
             (onkeyup)="resetData()"
             name="tweet"
@@ -21,16 +21,8 @@
           <div class="tweet-limit">{{ 150 - message.value.length }}</div>
         </div>
         
-        <div class="form-group label mb-2">
-          <button
-            action="none"
-            class="tag"
-            *ngFor="let tag of tags; let i = index"
-          >
-            <span (click)="deleteTag(i)">#{{ tag }}</span>
-          </button>
-        </div>
-        <div class="form-group label mb-3">
+        
+        <div class="form-group label mb-3" >
           <button
             *ngIf="!editTweet"
             [disabled]="144 - message.value.length < 0"

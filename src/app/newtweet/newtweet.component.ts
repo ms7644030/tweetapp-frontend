@@ -89,6 +89,9 @@ export class NewtweetComponent implements OnInit {
           this.result = true;
           this.tags = [];
           this.messageContent = '';
+          setTimeout(() => {
+            this.router.navigate(['/tweets']);
+          }, 1000);
         } else {
           this.tweeted = true;
           this.result = false;

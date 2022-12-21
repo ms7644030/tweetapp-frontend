@@ -3,3 +3,15 @@
     margin:auto;
     margin-top: 50px;
 }
+.card-header{
+    font-family: "Ubuntu", sans-serif !important;
+    background-color:  #34C2F7    !important;
+}
+.card-body{
+    font-family: "Ubuntu", sans-serif !important;
+    background-color:  #DCE5E9    !important;
+}
+.custom-link{
+    font-family: "Ubuntu", sans-serif !important;
+    text-decoration-color: black;
+}
