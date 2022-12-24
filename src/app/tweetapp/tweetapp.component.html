@@ -1,4 +1,8 @@
-<div class="card m-3  text-white" style="background-color: #23A3BF;" *ngIf="tweet != null">
+<div
+  class="card m-3 text-white"
+  style="background-color: #23a3bf"
+  *ngIf="tweet != null"
+>
   <div class="card-hearder">
     <h5>
       <img
@@ -11,39 +15,40 @@
   </div>
   <div class="card-body">
     <h6>{{ tweet.tweetText }}</h6>
-    <!-- <h6>Likes : {{likeCount}}</h6> -->
+    <h6>
+      <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+      {{ tweet.likes.length }}
+    </h6>
 
-    <h6>TimeStamp : {{ tweet.tweetDate }}</h6>
+    <h6><i class="fa-solid fa-clock"></i> {{ tweet.tweetDate }}</h6>
     <div class="d-flex">
       <button
-        (click)="likeTweet(true); enableDisableRule()"
-        [ngClass]="{ blue: toggle, red: !toggle }"
-       
+        (click)="likeTweet(true)"
+        *ngIf="!tweet.likes.includes(currentUser)"
       >
-        {{ status }}
+        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
       </button>
-      <!-- <button
+      <button
         class="btn btn-dark"
         (click)="likeTweet(false)"
         *ngIf="tweet.likes.includes(currentUser)"
-         disabled="tweet.likes.includes(currentUser)"
       >
-        Dislike
-      </button> -->
+        <i class="fas fa-thumbs-down"></i>
+      </button>
       <div class="space"></div>
       <button
         class="btn btn-dark ml-1 mr-1"
         (click)="editTweet()"
         *ngIf="tweet.username == currentUser"
       >
-        Edit Tweet
+        <i class="fas fa-edit"></i>
       </button>
       <button
         class="btn btn-dark ml-1 mr-1"
         (click)="deleteTweet()"
         *ngIf="tweet.username == currentUser"
       >
-        Delete Tweet
+        <i class="fa fa-trash" aria-hidden="true"></i>
       </button>
     </div>
 
@@ -54,7 +59,7 @@
       <h6>@{{ reply.username }}</h6>
       <h6 class="ml-5">{{ reply.comment }}</h6>
       <div class="space"></div>
-      <h6>{{ reply.timestamp }}</h6>
+      <h6><i class="fa-solid fa-clock"></i>{{ reply.timestamp }}</h6>
     </div>
   </div>
   <div class="d-flex">

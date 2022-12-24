@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { MainService } from '../main.service';
-import { IncomingResponse, TweetEntity } from '../models/incomingdata.model';
+import { TweetEntity } from '../models/incomingdata.model';
 import { Comments } from '../models/userInputForm';
 import { SharedService } from '../shared.service';
 
@@ -33,21 +33,20 @@ export class TweetappComponent implements OnInit {
   }
 
   ngOnInit(): void {
-     if(this.tweet.likes.includes(this.currentUser)){
+    if (this.tweet.likes.includes(this.currentUser)) {
       this.toggle = false;
       this.status = 'Liked';
-     }
+    }
   }
 
   replyToTweet(reply) {
     let currentReply = new Comments();
     currentReply.username = this.currentUser;
     let d = new Date();
-    let dformat = [d.getMonth()+1,
-      d.getDate(),
-      d.getFullYear()].join('-')+' '+
-     [d.getHours(),
-      d.getMinutes()].join(':');
+    let dformat =
+      [d.getMonth() + 1, d.getDate(), d.getFullYear()].join('-') +
+      ' ' +
+      [d.getHours(), d.getMinutes()].join(':');
     currentReply.timestamp = dformat;
     currentReply.comment = reply;
     this.tweet.replies.push(currentReply);
@@ -66,6 +65,12 @@ export class TweetappComponent implements OnInit {
   }
 
   likeTweet(like: boolean) {
+    if (like) {
+      this.tweet.likes.push(this.currentUser);
+    } else {
+      this.tweet.likes.splice(this.tweet.likes.indexOf(this.currentUser));
+    }
+
     this.service
       .likeTweet(
         this.currentUser,
@@ -76,14 +81,8 @@ export class TweetappComponent implements OnInit {
         if (data == 'liked tweet') {
           if (like) {
             this.tweet.likes.push(this.currentUser);
-
-            //  this.toggle = !this.toggle;
-            this.status = this.toggle ? 'Like' : 'Liked';
           } else {
             this.tweet.likes.splice(this.tweet.likes.indexOf(this.currentUser));
-
-            //*ngIf="!tweet.likes.includes(currentUser)"
-            //this.tweet.likeCounter -= 1;
           }
         }
       });
@@ -108,10 +107,5 @@ export class TweetappComponent implements OnInit {
   editTweet() {
     this.service.selectedTweet = this.tweet;
     this.route.navigate(['/edit/' + this.tweet.tweetId]);
-  }
-
-  enableDisableRule() {
-    this.toggle = !this.toggle;
-    this.status = this.toggle ? 'Like' : 'Liked';
   }
 }

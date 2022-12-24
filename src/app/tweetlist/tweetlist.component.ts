@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MainService } from '../main.service';
-import { IncomingResponse, TweetEntity } from '../models/incomingdata.model';
+import { TweetEntity } from '../models/incomingdata.model';
 
 @Component({
   selector: 'app-tweetlist',
@@ -9,7 +9,6 @@ import { IncomingResponse, TweetEntity } from '../models/incomingdata.model';
   styleUrls: ['./tweetlist.component.css'],
 })
 export class TweetlistComponent implements OnInit {
- // @ViewChild('scroll') scroll: ElementRef;
   tweetsList: TweetEntity[];
   tweetSelected = false;
   tweet: TweetEntity;
@@ -48,7 +47,5 @@ export class TweetlistComponent implements OnInit {
 
   scrollTop() {
     window.scrollTo(0, 0);
-
-    //this.scroll.nativeElement.scrollTop = 0;
   }
 }

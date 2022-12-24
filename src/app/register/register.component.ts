@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit {
   );
 
   checkPasswords(form: FormGroup) {
-    // here we have the 'passwords' group
+    //PASSWORD GROUP
     const password = form.get('password').value;
     const confirmPassword = form.get('confirmPassword').value;
 
@@ -46,7 +46,7 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.errors;
   }
 
-  constructor(private service: MainService,private currentRoute: Router) {
+  constructor(private service: MainService, private currentRoute: Router) {
     this.registerFormData = new RegisterForm();
   }
 

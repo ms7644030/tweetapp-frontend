@@ -1,11 +1,16 @@
 <div class="container">
-  <div class="content-card" >
+  <div class="content-card">
     <!--scroll-ele" #scroll-->
     <app-tweetapp
       *ngIf="tweetSelected"
       [selectedTweet]="tweet"
       (delTweet)="deleteTweet($event)"
     ></app-tweetapp>
+    <div class="center" *ngIf="tweetsList.length == 0">
+      <img src="../assets/x-icon.png" class="gravatar-big" />
+      <h2>tweets</h2>
+      
+    </div>
     <div class="card" *ngFor="let tweet of tweetsList; let i = index">
       <div class="card-content d-flex">
         <div class="gravatar pt-2">
@@ -16,19 +21,24 @@
           />
         </div>
         <div class="content ml-5">
-          <h2>@{{ tweet.username}}</h2>
+          <h2>@{{ tweet.username }}</h2>
           <h5>{{ tweet.tweetText }}</h5>
-          <span>{{ tweet.likes.length }} <i class="fa fa-thumbs-up" aria-hidden="true"></i> </span>
-          <span> {{ tweet.replies.length }} <i class="fa fa-reply" aria-hidden="true"></i></span>
+          <span
+            >{{ tweet.likes.length }}
+            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+          </span>
+          <span>
+            {{ tweet.replies.length }}
+            <i class="fa fa-reply" aria-hidden="true"></i
+          ></span>
         </div>
         <div class="space"></div>
         <div class="content-end pr-3">
           <h5>{{ tweet.tweetDate }}</h5>
-          <button class="btn btn-dark mt-3" (click)="viewTweet(i);scrollTop()">
+          <button class="btn btn-dark mt-3" (click)="viewTweet(i); scrollTop()">
             View Tweet
           </button>
         </div>
-        
       </div>
     </div>
   </div>
